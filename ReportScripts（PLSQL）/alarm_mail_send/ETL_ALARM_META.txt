@@ -1,0 +1,58 @@
+-- Create table
+create table ETL_ALARM_META
+(
+  alarm_id        INTEGER not null,
+  alarm_name      VARCHAR2(400),
+  alarm_column    VARCHAR2(60),
+  alarm_condition VARCHAR2(100),
+  alarm_sql       VARCHAR2(4000),
+  alarm_email     VARCHAR2(400),
+  create_at       DATE,
+  stat            INTEGER,
+  owner           VARCHAR2(40)
+)
+tablespace YXYOLAP
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column ETL_ALARM_META.alarm_id
+  is '预警任务ID';
+comment on column ETL_ALARM_META.alarm_name
+  is '预警任务名称';
+comment on column ETL_ALARM_META.alarm_column
+  is '预警字段';
+comment on column ETL_ALARM_META.alarm_condition
+  is '预警条件(SQL 语法)';
+comment on column ETL_ALARM_META.alarm_sql
+  is '预警SQL';
+comment on column ETL_ALARM_META.alarm_email
+  is '预警邮件名';
+comment on column ETL_ALARM_META.create_at
+  is '预警创建时间';
+comment on column ETL_ALARM_META.stat
+  is '1 有效 2 测试 其它值无效';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table ETL_ALARM_META
+  add constraint ALARM_ID_PK primary key (ALARM_ID)
+  using index 
+  tablespace YXYOLAP
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Grant/Revoke object privileges 
+grant select, insert, update on ETL_ALARM_META to PUBLIC;

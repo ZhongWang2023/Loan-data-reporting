@@ -1,0 +1,445 @@
+﻿"ALARM_ID","ALARM_NAME","ALARM_COLUMN","ALARM_CONDITION","ALARM_SQL","ALARM_EMAIL","CREATE_AT","STAT","OWNER"
+"19","24A 年龄24岁以下进件占比周监控","ratio","ratio >0.1","select (sum(case when  tb.age <24 then 1 else 0 end)+1)/(count(*)+1) as ratio 
+from 
+(
+    select national_id,(to_char(sysdate, 'yyyy') - substr(national_id, 7, 4)) as age
+    from BI_ODS.EXTU_XYF_USER_INFO
+    WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+    and   TRUNC(update_at) >= TRUNC(SYSDATE - 7)
+)tb","table_dq_alarm","2019/2/13","1","lily"
+"18","24A 贷款金额日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_XYF_USER_INFO
+WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+and   TRUNC(update_at) >= TRUNC(SYSDATE - 1)
+and   (loan_amount <3000 or loan_amount >50000)","table_dq_alarm","2019/2/13","1","lily"
+"17","24A 贷款期数日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_XYF_USER_INFO
+WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+and   TRUNC(update_at) >= TRUNC(SYSDATE - 1)
+and   installments not in (3,6,9)","table_dq_alarm","2019/2/13","1","lily"
+"16","24A 身份证有效期到期日监控","alarm_flag","alarm_flag=1","select case when sum(case when to_date(substr(valid_date_range,10,length(valid_date_range)-9),'yyyy-mm-dd') < to_date(SYSDATE) then 1 else 0 end) >0 
+            then 1 
+			else 0 
+	    end as alarm_flag 
+from BI_ODS.EXTU_XYF_USER_INFO
+WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+and   TRUNC(update_at) >= TRUNC(SYSDATE - 1)
+and   substr(valid_date_range,10,length(valid_date_range)-9) != '长期'","table_dq_alarm","2019/2/13","1","lily"
+"15","24A信用飞有航旅数据占比周监控","ratio","ratio<0.5","select (tb.cnt_valid+1)/(tb.cnt_total+1) as ratio
+from 
+(
+    select sum(case when flight_mileage is null then 1 else 0 end) as cnt_null
+           ,sum(case when flight_mileage is not null then 1 else 0 end) as cnt_valid
+           ,count(*) as cnt_total
+    from BI_ODS.EXTU_XYF_USER_INFO
+    WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+    and   TRUNC(update_at) >= TRUNC(SYSDATE - 7)
+
+)tb","table_dq_alarm","2019/2/13","1","lily"
+"14","24A航旅渠道进件占比周监控","ratio","ratio<0.2","select (tb.cnt_f+1)/(tb.cnt_total+1) as ratio
+from 
+(
+    select sum(case when source_type='OTHER' then 1 else 0 end) as cnt_other
+           ,sum(case when source_type like 'F%' then 1 else 0 end) as cnt_f
+           ,count(*) as cnt_total
+    from BI_ODS.EXTU_XYF_USER_INFO
+    WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+    and   TRUNC(update_at) >= TRUNC(SYSDATE - 7)
+
+)tb","table_dq_alarm","2019/2/13","1","lily"
+"13","24A老客户进件占比周监控","ratio","ratio<0.5","select (tb.cnt_old+1)/(tb.cnt_total+1) as ratio
+from 
+(
+    select sum(case when is_new_customer=0 then 1 else 0 end) as cnt_old
+           ,sum(case when is_new_customer=1 then 1 else 0 end) as cnt_new
+           ,count(*) as cnt_total
+    from BI_ODS.EXTU_XYF_USER_INFO
+    WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+    and   TRUNC(update_at) >= TRUNC(SYSDATE - 7)
+
+)tb","table_dq_alarm","2019/2/13","1","lily"
+"12","24A进件量日监控","cnt_total","cnt_total>100 or cnt_total=0","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)","table_dq_alarm","2019/2/13","1","lily"
+"11","24A通过率周监控","ratio","ratio<0.6 or ratio>0.9","select (tb.cnt_approve+1)/(tb.cnt_total+1) as ratio
+from 
+(
+    select sum(case when credit_result = 'Approve' then 1 else 0 end) as cnt_approve
+           ,sum(case when credit_result = 'Decline' then 1 else 0 end) as cnt_decline
+           ,count(*) as cnt_total
+    from BI_ODS.LLI_CREDIT_RESULTS_24A
+    WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+    and   TRUNC(created_at) >= TRUNC(SYSDATE - 7)
+
+)tb","table_dq_alarm","2019/2/13","1","lily"
+"39","9F1 phone字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_KH_USER_INFO_NEW
+WHERE TRUNC(raw_update_time) < TRUNC(SYSDATE)
+and   TRUNC(raw_update_time) >= TRUNC(SYSDATE - 1)
+and   length(phone) !=11","table_dq_alarm","2019/2/13","1","lily"
+"6","9F1 source_type新增监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_KH_USER_INFO_NEW
+WHERE TRUNC(raw_update_time) < TRUNC(SYSDATE)
+and   TRUNC(raw_update_time) >= TRUNC(SYSDATE - 1)
+and   source_type not in ('1','5')","table_dq_alarm","2019/1/30","1","lily"
+"7","9F1授信模型结果表credit_result异常值监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result not in ('Approve','Decline')","table_dq_alarm","2019/1/30","1","lily"
+"8","9F1授信模型日通过率监控","ratio","ratio<0.5 or ratio>0.9","select (tb.cnt_approve+1)/(tb.cnt_total+1) as ratio
+from 
+(
+    select count(distinct case when credit_result = 'Approve' then account_id  end) as cnt_approve
+           ,count(distinct case when credit_result = 'Decline' then account_id  end) as cnt_decline
+           ,count(distinct account_id ) as cnt_total
+    from BI_ODS.LLI_CREDIT_RESULTS_9F1
+    WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+    and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+
+)tb","table_dq_alarm","2019/1/30","1","lily"
+"9","24A日模型通过率监控","ratio","ratio<0.6 or ratio>0.9","select (tb.cnt_approve+1)/(tb.cnt_total+1) as ratio
+from 
+(
+    select sum(case when credit_result = 'Approve' then 1 else 0 end) as cnt_approve
+           ,sum(case when credit_result = 'Decline' then 1 else 0 end) as cnt_decline
+           ,count(*) as cnt_total
+    from BI_ODS.LLI_CREDIT_RESULTS_24A
+    WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+    and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+
+)tb","table_dq_alarm","2019/2/2","1","lily"
+"10","24A日模型进件量监控","cnt_total","cnt_total>100","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)","table_dq_alarm","2019/2/2","1","lily"
+"42","22C新门店进件（日监控）","count_","count_>0","select count(1) as count_
+  from (select store_id, min(trunc(raw_add_time)) as apply_time
+          from bi_ods.extu_ztjh_user_info
+         group by store_id)
+ where apply_time = trunc(sysdate - 1)","table_dq_alarm_LZ","2019/2/14","1","lizhen"
+"43","23C新门店进件（日监控）","count_","count_>0","select count(1) as count_
+  from (select mer_store_id, min(trunc(created_at)) as apply_time
+          from bi_ods.coop_gm_extract_records
+         group by mer_store_id)
+ where apply_time = trunc(sysdate - 1)","table_dq_alarm_LZ","2019/2/14","1","lizhen"
+"44","6C新门店进件（日监控）","count_","count_>0","select count(1) as count_
+  from (select store_id, min(trunc(raw_add_time)) as apply_time
+          from bi_ods.extu_fl_user_info
+         group by store_id)
+ where apply_time = trunc(sysdate - 1)","table_dq_alarm_LZ","2019/2/14","1","lizhen"
+"45","6C新店员进件（日监控）","count_","count_>0","select count(1) as count_
+  from (select employee_id, min(trunc(raw_add_time)) as apply_time
+          from bi_ods.extu_fl_user_info
+         group by employee_id)
+ where apply_time = trunc(sysdate - 1)
+","table_dq_alarm_LZ","2019/2/14","1","lizhen"
+"74","消费贷门店SA评级更新监控","all_cnt","all_cnt=0","SELECT count(*) as all_cnt FROM bi_creditrw.credit_store_sa_eval_grade where to_char(to_date(rpt_date, 'yyyy-mm-dd'), 'yyyy-mm') = to_char(add_months(SYSDATE, -1), 'yyyy-mm')","table_dq_alarm_LZ","2019/3/13","1","wuyf"
+"1","24A信用飞新老客户字段异常值监控","alarm_flag","alarm_flag=1","select case         when count(*) > 0 then          1         else          0       end as alarm_flag  from bi_ods.extu_xyf_user_info where trunc(update_at) < trunc(sysdate)   and trunc(update_at) >= trunc(sysdate - 1)   and is_new_customer not in (0, 1)","table_dq_alarm","2019/1/25","1","lily"
+"2","24A信用飞老客户占比监控","ratio","ratio<0.5","select tb.cnt_old / tb.cnt_total as ratio  from (select sum(case                     when is_new_customer = 0 then                      1                     else                      0                   end) as cnt_old,               sum(case                     when is_new_customer = 1 then                      1                     else                      0                   end) as cnt_new,               count(*) as cnt_total          from bi_ods.extu_xyf_user_info         where trunc(update_at) < trunc(sysdate)           and trunc(update_at) >= trunc(sysdate - 1)        ) tb","table_dq_alarm","2019/1/25","1","lily"
+"3","24A信用飞source_type空字段监控","alarm_flag","alarm_flag=1","select case         when count(*) > 0 then          1         else          0       end as alarm_flag  from bi_ods.extu_xyf_user_info where trunc(update_at) < trunc(sysdate)   and trunc(update_at) >= trunc(sysdate - 1)   and source_type is null","table_dq_alarm","2019/1/25","1","lily"
+"4","24A信用飞航旅渠道占比监控","ratio","ratio<0.2","select tb.cnt_f / tb.cnt_total as ratio  from (select sum(case                     when source_type = 'OTHER' then                      1                     else                      0                   end) as cnt_other,               sum(case                     when source_type like 'F%' then                      1                     else                      0                   end) as cnt_f,               count(*) as cnt_total          from bi_ods.extu_xyf_user_info         where trunc(update_at) < trunc(sysdate)           and trunc(update_at) >= trunc(sysdate - 1)        ) tb","table_dq_alarm","2019/1/25","1","lily"
+"5","24A信用飞有航旅数据占比监控","ratio","ratio<0.5","select tb.cnt_valid / tb.cnt_total as ratio  from (select sum(case                     when flight_mileage is null then                      1                     else                      0                   end) as cnt_null,               sum(case                     when flight_mileage is not null then                      1                     else                      0                   end) as cnt_valid,               count(*) as cnt_total          from bi_ods.extu_xyf_user_info         where trunc(update_at) < trunc(sysdate)           and trunc(update_at) >= trunc(sysdate - 1)) tb","table_dq_alarm","2019/1/25","1","lily"
+"0","test","result","result between 0.5 and 0.6","select 0.6 from dual","table_dq_alarm","2019/1/28","1",""
+"70","9F1提现模型放款总额度限制日拒绝量大于1日监控","cnt_total","cnt_total>1","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1_LOAN
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result in ('Frozen','Forever Frozen')
+and   credit_reason = 'funding amount limit'","table_dq_alarm","2019/2/22","1","lily"
+"69","9F1提现模型逾期大于30天限制日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1_LOAN
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result in ('Frozen','Forever Frozen')
+and   credit_reason = 'defualt days over 30d'","table_dq_alarm","2019/2/22","1","lily"
+"68","9F1授信模型授信总额度限制日拒绝量大于1日监控","cnt_total","cnt_total>1","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'credit amount limit'","table_dq_alarm","2019/2/22","1","lily"
+"67","9F1授信模型放款个数限制日拒绝量大于1日监控","cnt_total","cnt_total>1","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'approve limit'","table_dq_alarm","2019/2/22","1","lily"
+"66","9F1授信模型id5限制日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'id5'","table_dq_alarm","2019/2/22","1","lily"
+"65","9F1授信模型学生限制日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'student limit' ","table_dq_alarm","2019/2/22","1","lily"
+"64","9F1授信模型内部多头限制日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'inner duotou'","table_dq_alarm","2019/2/22","1","lily"
+"63","9F1授信模型黑名单限制日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'hit black list' ","table_dq_alarm","2019/2/22","1","lily"
+"62","9F1授信模型同盾严重逾期限制日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'hit tongdun default list'","table_dq_alarm","2019/2/22","1","lily"
+"61","9F1授信模型最大逾期大于30天日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'defualt days over 30d'","table_dq_alarm","2019/2/22","1","lily"
+"60","9F1授信模型当前逾期限制日拒绝量大于1日监控","cnt_total","cnt_total>1","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'current defualt'","table_dq_alarm","2019/2/22","1","lily"
+"59","9F1重复调用授信接口限制日拒绝量大于1日监控","cnt_total","cnt_total>1","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'already have quota'","table_dq_alarm","2019/2/22","1","lily"
+"40","9F1 进件新客户（非9F授信客户）日监控","cnt_total","cnt_total>0","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   old_flag = 0","table_dq_alarm","2019/2/14","1","lily"
+"41","22C潭州网校进件占比（日监控）","ratio_","ratio_>0.8","select sum(case when store_id = 230 then 1 else 0 end)/count(1) as ratio_
+  from bi_ods.extu_ztjh_user_info
+ where trunc(raw_add_time) < trunc(sysdate)
+   and trunc(raw_add_time) >= trunc(sysdate - 1)","table_dq_alarm_LZ","2019/2/14","1","lizhen"
+"58","24A 放款总额度限制日拒绝量大于1日监控","cnt_total","cnt_total>1","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'funding amount limit'","table_dq_alarm","2019/2/22","1","lily"
+"57","24A 手机三要素限制日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'phone element3'","table_dq_alarm","2019/2/22","1","lily"
+"56","24A 放款个数限制日拒绝量大于1日监控","cnt_total","cnt_total>1","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'approve limit'","table_dq_alarm","2019/2/22","1","lily"
+"55","24A 申请金额限制日拒绝量大于1日监控","cnt_total","cnt_total>1","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'loan amount limit'","table_dq_alarm","2019/2/22","1","lily"
+"54","24A 银行卡三要素日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'bank element3'","table_dq_alarm","2019/2/22","1","lily"
+"53","24A 人脸识别日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'face not real'","table_dq_alarm","2019/2/22","1","lily"
+"52","24A id5日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'id5'","table_dq_alarm","2019/2/22","1","lily"
+"51","24A 学生日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'student limit'","table_dq_alarm","2019/2/22","1","lily"
+"50","24A 同盾一个月多头日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'pltf_cnt_1m limit'","table_dq_alarm","2019/2/22","1","lily"
+"49","24A 蜜罐多头日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'searched_org_cnt limit'","table_dq_alarm","2019/2/22","1","lily"
+"48","24A 手机在网时长日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'bad phone' ","table_dq_alarm","2019/2/22","1","lily"
+"47","24A 黑名单日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'hit black list' ","table_dq_alarm","2019/2/22","1","lily"
+"46","24A 同盾严重逾期日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_24A
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result = 'Decline'
+and   credit_reason = 'hit tongdun default list'","table_dq_alarm","2019/2/22","1","lily"
+"71","9F1提现模型同盾严重逾期限制日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1_LOAN
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result in ('Frozen','Forever Frozen')
+and   credit_reason = 'hit tongdun default list' ","table_dq_alarm","2019/2/22","1","lily"
+"73","9F1提现模型内部多头限制日拒绝量大于1日监控","cnt_total","cnt_total>1","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1_LOAN
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result in ('Frozen','Forever Frozen')
+and   credit_reason = 'inner duotou' ","table_dq_alarm","2019/2/22","1","lily"
+"72","9F1提现模型黑名单限制日拒绝量大于3日监控","cnt_total","cnt_total>3","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1_LOAN
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)
+and   credit_result in ('Frozen','Forever Frozen')
+and   credit_reason = 'hit black list' ","table_dq_alarm","2019/2/22","1","lily"
+"38","9F1 national_id字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_KH_USER_INFO_NEW
+WHERE TRUNC(raw_update_time) < TRUNC(SYSDATE)
+and   TRUNC(raw_update_time) >= TRUNC(SYSDATE - 1)
+and   length(national_id) !=18","table_dq_alarm","2019/2/13","1","lily"
+"37","9F1 source_type字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_KH_USER_INFO_NEW
+WHERE TRUNC(raw_update_time) < TRUNC(SYSDATE)
+and   TRUNC(raw_update_time) >= TRUNC(SYSDATE - 1)
+and   source_type not in ('1','5')","table_dq_alarm","2019/2/13","1","lily"
+"36","9F1 highest_education字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_KH_USER_INFO_NEW
+WHERE TRUNC(raw_update_time) < TRUNC(SYSDATE)
+and   TRUNC(raw_update_time) >= TRUNC(SYSDATE - 1)
+and   highest_education not in ('10','20','30','40','50','60','70','80','90','99')","table_dq_alarm","2019/2/13","1","lily"
+"35","9F1 年龄24岁以下进件占比周监控","ratio","ratio>0.05","select (sum(case when  tb.age <24 then 1 else 0 end)+1)/(count(*)+1) as ratio 
+from 
+(
+    select national_id,(to_char(sysdate, 'yyyy') - substr(national_id, 7, 4)) as age
+    from BI_ODS.EXTU_KH_USER_INFO_NEW
+    WHERE TRUNC(raw_update_time) < TRUNC(SYSDATE)
+    and   TRUNC(raw_update_time) >= TRUNC(SYSDATE - 7)
+)tb","table_dq_alarm","2019/2/13","1","lily"
+"34","9F1 高中及以下学历进件占比周监控","ratio","ratio>0.5","select (cnt_edu+1)/(cnt_total+1) as ratio 
+from 
+(
+    select sum(case when  highest_education in ('60','70','80','90','99') then 1 else 0 end) as cnt_edu
+	       ,count(*) as cnt_total
+    from BI_ODS.EXTU_KH_USER_INFO_NEW
+    WHERE TRUNC(raw_update_time) < TRUNC(SYSDATE)
+    and   TRUNC(raw_update_time) >= TRUNC(SYSDATE - 7)
+)tb","table_dq_alarm","2019/2/13","1","lily"
+"33","9F1提现模型进件量日监控","cnt_total","cnt_total>100 or cnt_total=0","select count(*) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1_LOAN
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)","table_dq_alarm","2019/2/13","1","lily"
+"32","9F1授信模型进件量日监控","cnt_total","cnt_total>100 or cnt_total=0","select count(distinct account_id) as cnt_total
+from BI_ODS.LLI_CREDIT_RESULTS_9F1
+WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+and   TRUNC(created_at) >= TRUNC(SYSDATE - 1)","table_dq_alarm","2019/2/13","1","lily"
+"31","9F1 提现模型通过率周监控","ratio","ratio<0.5","select (tb.cnt_approve+1)/(tb.cnt_total+1) as ratio
+from 
+(
+    select count(distinct case when credit_result = 'Approve' then  loan_number end) as cnt_approve
+           ,count(distinct case when credit_result = 'Decline' then loan_number end) as cnt_decline
+           ,count(distinct loan_number) as cnt_total
+    from BI_ODS.LLI_CREDIT_RESULTS_9F1_LOAN
+    WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+    and   TRUNC(created_at) >= TRUNC(SYSDATE - 7)
+
+)tb","table_dq_alarm","2019/2/13","1","lily"
+"30","9F1授信模型通过率周监控","ratio","ratio<0.5 or ratio>0.9","select (tb.cnt_approve+1)/(tb.cnt_total+1) as ratio
+from 
+(
+    select count(distinct case when credit_result = 'Approve' then account_id  end) as cnt_approve
+           ,count(distinct case when credit_result = 'Decline' then account_id  end) as cnt_decline
+           ,count(distinct account_id ) as cnt_total
+    from BI_ODS.LLI_CREDIT_RESULTS_9F1
+    WHERE TRUNC(created_at) < TRUNC(SYSDATE)
+    and   TRUNC(created_at) >= TRUNC(SYSDATE - 7)
+
+)tb","table_dq_alarm","2019/2/13","1","lily"
+"29","24A 老客户进件order表无记录日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from 
+(
+    select  t1.national_id
+    from BI_ODS.EXTU_XYF_USER_INFO t1
+    left join (select * from BI_ODS.EXTU_XYF_LOAN_HISTORY_ORDER where TRUNC(create_time) <= TRUNC(SYSDATE- 1))t2
+    on t1.national_id = t2.id_card_number
+    WHERE TRUNC(t1.update_at) < TRUNC(SYSDATE)
+    and   TRUNC(t1.update_at) >= TRUNC(SYSDATE - 1)
+    and   t1.is_new_customer =0
+    and   t2.id_card_number is null 
+)tb","table_dq_alarm","2019/2/13","1","lily"
+"28","24A national_id字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_XYF_USER_INFO
+WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+and   TRUNC(update_at) >= TRUNC(SYSDATE - 1)
+and   length(national_id) !=18","table_dq_alarm","2019/2/13","1","lily"
+"27","24A ip字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_XYF_USER_INFO
+WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+and   TRUNC(update_at) >= TRUNC(SYSDATE - 1)
+and   ip is null ","table_dq_alarm","2019/2/13","1","lily"
+"26","24A flight_credit字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_XYF_USER_INFO
+WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+and   TRUNC(update_at) >= TRUNC(SYSDATE - 1)
+and   flight_credit is not null 
+and   (flight_credit < 350 or flight_credit > 910)","table_dq_alarm","2019/2/13","1","lily"
+"25","24A highest_education字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_XYF_USER_INFO
+WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+and   TRUNC(update_at) >= TRUNC(SYSDATE - 1)
+and   highest_education not in ('10','20','30','40','50','60','70','80','90','99')","table_dq_alarm","2019/2/13","1","lily"
+"24","24A phone字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_XYF_USER_INFO
+WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+and   TRUNC(update_at) >= TRUNC(SYSDATE - 1)
+and   length(phone) !=11","table_dq_alarm","2019/2/13","1","lily"
+"23","24A source_type字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_XYF_USER_INFO
+WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+and   TRUNC(update_at) >= TRUNC(SYSDATE - 1)
+and   source_type is null","table_dq_alarm","2019/2/13","1","lily"
+"22","24A is_new_customer字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_XYF_USER_INFO
+WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+and   TRUNC(update_at) >= TRUNC(SYSDATE - 1)
+and   is_new_customer not in (0,1)","table_dq_alarm","2019/2/13","1","lily"
+"21","24A bank_card_number字段异常日监控","alarm_flag","alarm_flag=1","select case when count(*)>0 then 1 else 0 end as alarm_flag
+from BI_ODS.EXTU_XYF_USER_INFO
+WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+and   TRUNC(update_at) >= TRUNC(SYSDATE - 1)
+and   (length(bank_card_number) <16 or length(bank_card_number) >19)","table_dq_alarm","2019/2/13","1","lily"
+"20","24A 高中及以下学历进件占比周监控","ratio","ratio>0.5","select (cnt_edu+1)/(cnt_total+1) as ratio 
+from 
+(
+    select sum(case when  highest_education in ('60','70','80','90','99') then 1 else 0 end) as cnt_edu
+	       ,count(*) as cnt_total
+    from BI_ODS.EXTU_XYF_USER_INFO
+    WHERE TRUNC(update_at) < TRUNC(SYSDATE)
+    and   TRUNC(update_at) >= TRUNC(SYSDATE - 7)
+)tb","table_dq_alarm","2019/2/13","1","lily"

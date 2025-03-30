@@ -1,0 +1,70 @@
+-- Create table
+create table OLAPUSER.ETL_MAIL_META
+(
+  mail_name          VARCHAR2(100) not null,
+  mail_subject       VARCHAR2(200),
+  mail_recipients    VARCHAR2(2000),
+  mail_recipientscc  VARCHAR2(2000),
+  mail_recipientsbcc VARCHAR2(2000),
+  contacts_info      VARCHAR2(200),
+  mail_compress_name VARCHAR2(200) default 'no_compress',
+  updated_at         DATE default sysdate,
+  is_valid           INTEGER default 1,
+  biz_dept           VARCHAR2(100),
+  mail_title         VARCHAR2(100)
+)
+tablespace YXYOLAP
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table OLAPUSER.ETL_MAIL_META
+  is 'email info send by BI email system';
+-- Add comments to the columns 
+comment on column OLAPUSER.ETL_MAIL_META.mail_name
+  is '唯一ID';
+comment on column OLAPUSER.ETL_MAIL_META.mail_subject
+  is '邮件主题';
+comment on column OLAPUSER.ETL_MAIL_META.mail_recipients
+  is '邮件收件人 空格分割 混入失效邮件地址会导致邮件发送失败';
+comment on column OLAPUSER.ETL_MAIL_META.mail_recipientscc
+  is '邮件抄送列表';
+comment on column OLAPUSER.ETL_MAIL_META.mail_recipientsbcc
+  is '邮件暗送列表';
+comment on column OLAPUSER.ETL_MAIL_META.contacts_info
+  is '邮件联系人信息';
+comment on column OLAPUSER.ETL_MAIL_META.mail_compress_name
+  is '邮件压缩附件文件名，需要压缩就填写';
+comment on column OLAPUSER.ETL_MAIL_META.updated_at
+  is '数据最后更新时间';
+comment on column OLAPUSER.ETL_MAIL_META.is_valid
+  is '邮件配置是否有效';
+comment on column OLAPUSER.ETL_MAIL_META.biz_dept
+  is '邮件发送（所属）部门';
+comment on column OLAPUSER.ETL_MAIL_META.mail_title
+  is '邮件称谓';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table OLAPUSER.ETL_MAIL_META
+  add constraint ETL_MAIL_META_PK primary key (MAIL_NAME)
+  using index 
+  tablespace YXYOLAP
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Grant/Revoke object privileges 
+grant select on OLAPUSER.ETL_MAIL_META to BI_RPT;
+grant insert, update on OLAPUSER.ETL_MAIL_META to

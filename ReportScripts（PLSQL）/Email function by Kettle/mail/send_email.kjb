@@ -1,0 +1,379 @@
+<job>
+  <name>send_email</name>
+    <description/>
+    <extended_description/>
+    <job_version/>
+    <job_status>0</job_status>
+  <directory>&#x2f;email</directory>
+  <created_user>-</created_user>
+  <created_date>2017&#x2f;06&#x2f;22 16&#x3a;20&#x3a;56.935</created_date>
+  <modified_user>-</modified_user>
+  <modified_date>2017&#x2f;12&#x2f;14 15&#x3a;49&#x3a;31.945</modified_date>
+    <parameters>
+        <parameter>
+            <name>MAIL_NAME</name>
+            <default_value>0001</default_value>
+            <description/>
+        </parameter>
+    </parameters>
+    <slaveservers>
+         <slaveserver><name>master</name><hostname>ip-172-16-15-211</hostname><port>8080</port><webAppName/><username>cluster</username><password>Encrypted 2be98afc86aa7f2e4cb1aa265cd86aac8</password><proxy_hostname/><proxy_port/><non_proxy_hosts/><master>Y</master><sslMode>N</sslMode></slaveserver>
+         <slaveserver><name>master1</name><hostname>172.16.15.215</hostname><port>8080</port><webAppName/><username>cluster</username><password>Encrypted 2be98afc86aa7f2e4cb1aa265cd86aac8</password><proxy_hostname/><proxy_port/><non_proxy_hosts/><master>Y</master><sslMode>N</sslMode></slaveserver>
+         <slaveserver><name>slave1-8081</name><hostname>172.16.15.215</hostname><port>8081</port><webAppName/><username>cluster</username><password>Encrypted 2be98afc86aa7f2e4cb1aa265cd86aac8</password><proxy_hostname/><proxy_port/><non_proxy_hosts/><master>N</master><sslMode>N</sslMode></slaveserver>
+         <slaveserver><name>slave2-8082</name><hostname>172.16.15.215</hostname><port>8082</port><webAppName/><username>cluster</username><password>Encrypted 2be98afc86aa7f2e4cb1aa265cd86aac8</password><proxy_hostname/><proxy_port/><non_proxy_hosts/><master>N</master><sslMode>N</sslMode></slaveserver>
+    </slaveservers>
+<job-log-table><connection/>
+<schema/>
+<table/>
+<size_limit_lines/>
+<interval/>
+<timeout_days/>
+<field><id>ID_JOB</id><enabled>Y</enabled><name>ID_JOB</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>JOBNAME</id><enabled>Y</enabled><name>JOBNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field><field><id>EXECUTING_SERVER</id><enabled>N</enabled><name>EXECUTING_SERVER</name></field><field><id>EXECUTING_USER</id><enabled>N</enabled><name>EXECUTING_USER</name></field><field><id>START_JOB_ENTRY</id><enabled>N</enabled><name>START_JOB_ENTRY</name></field><field><id>CLIENT</id><enabled>N</enabled><name>CLIENT</name></field></job-log-table>
+<jobentry-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>JOBNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>JOBENTRYNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>RESULT</id><enabled>Y</enabled><name>RESULT</name></field><field><id>NR_RESULT_ROWS</id><enabled>Y</enabled><name>NR_RESULT_ROWS</name></field><field><id>NR_RESULT_FILES</id><enabled>Y</enabled><name>NR_RESULT_FILES</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field><field><id>COPY_NR</id><enabled>N</enabled><name>COPY_NR</name></field></jobentry-log-table>
+<channel-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>LOGGING_OBJECT_TYPE</id><enabled>Y</enabled><name>LOGGING_OBJECT_TYPE</name></field><field><id>OBJECT_NAME</id><enabled>Y</enabled><name>OBJECT_NAME</name></field><field><id>OBJECT_COPY</id><enabled>Y</enabled><name>OBJECT_COPY</name></field><field><id>REPOSITORY_DIRECTORY</id><enabled>Y</enabled><name>REPOSITORY_DIRECTORY</name></field><field><id>FILENAME</id><enabled>Y</enabled><name>FILENAME</name></field><field><id>OBJECT_ID</id><enabled>Y</enabled><name>OBJECT_ID</name></field><field><id>OBJECT_REVISION</id><enabled>Y</enabled><name>OBJECT_REVISION</name></field><field><id>PARENT_CHANNEL_ID</id><enabled>Y</enabled><name>PARENT_CHANNEL_ID</name></field><field><id>ROOT_CHANNEL_ID</id><enabled>Y</enabled><name>ROOT_CHANNEL_ID</name></field></channel-log-table>
+   <pass_batchid>N</pass_batchid>
+   <shared_objects_file/>
+  <entries>
+    <entry>
+      <name>send_email_withzip</name>
+      <description/>
+      <type>MAIL</type>
+      <server>&#x24;&#x7b;bi_mail_smtp_addr&#x7d;</server>
+      <port>&#x24;&#x7b;bi_mail_smtp_port&#x7d;</port>
+      <destination>&#x24;&#x7b;MAIL_RECIPIENTS&#x7d;</destination>
+      <destinationCc>&#x24;&#x7b;MAIL_RECIPIENTSCC&#x7d;</destinationCc>
+      <destinationBCc>&#x24;&#x7b;MAIL_RECIPIENTSBCC&#x7d;</destinationBCc>
+      <replyto>&#x24;&#x7b;bi_mail_addr&#x7d;</replyto>
+      <replytoname>&#x24;&#x7b;bi_mail_name&#x7d;</replytoname>
+      <subject>&#x24;&#x7b;MAIL_SUBJECT&#x7d;</subject>
+      <include_date>Y</include_date>
+      <contact_person>&#x90ed;&#x6d77;&#x9f99;</contact_person>
+      <contact_phone>13628465255</contact_phone>
+      <comment>Dear &#x3c;b&#x3e;&#x24;&#x7b;MAIL_TITLE&#x7d;&#x3c;&#x2f;b&#x3e;,&#xd;&#xa;&#x3c;br&#x3e;&#x3c;br&#x3e;&#xd;&#xa;&#x9644;&#x4ef6;&#x662f;&#x4f60;&#x8ba2;&#x9605;&#x7684;&#x6570;&#x636e;&#x6587;&#x4ef6;&#xff0c;&#x8bf7;&#x67e5;&#x6536;&#x3002;&#x3c;br&#x3e;&#xd;&#xa;&#x5982;&#x6709;&#x7591;&#x95ee;&#x8bf7;&#x8054;&#x7cfb; &#x24;&#x7b;CONTACTS_INFO&#x7d; &#x3002;&#x3c;br&#x3e;&#x3c;br&#x3e;&#xd;&#xa;&#xd;&#xa;&#x91cd;&#x5e86;&#x5c0f;&#x96e8;&#x70b9;&#x5c0f;&#x989d;&#x8d37;&#x6b3e;&#x6709;&#x9650;&#x516c;&#x53f8;&#x3c;br&#x3e;&#xd;&#xa;&#x91cd;&#x5e86;&#x5e02;&#x6e1d;&#x5317;&#x533a;&#x7ea2;&#x9526;&#x5927;&#x9053;90&#x53f7;&#x4e2d;&#x6e1d;&#x5e7f;&#x573a;2&#x5e62;26&#x697c;&#x3c;br&#x3e;&#xd;&#xa;&#xd;&#xa;---------------------------------------------------------------------&#x3c;br&#x3e;&#xd;&#xa;&#x91cd;&#x8981;&#x63d0;&#x793a;&#xff1a;&#x672c;&#x90ae;&#x4ef6;&#x53ca;&#x5176;&#x6240;&#x5305;&#x542b;&#x4fe1;&#x606f;&#x7eaf;&#x5c5e;&#x975e;&#x516c;&#x5f00;&#x7684;&#x673a;&#x5bc6;&#x4fe1;&#x606f;&#xff0c;&#x4ec5;&#x9650;&#x4e8e;&#x6536;&#x4ef6;&#x4eba;&#x4f7f;&#x7528;&#xff0c;&#x5e76;&#x53d7;&#x6709;&#x5173;&#x7279;&#x6743;&#x6216;&#x5176;&#x4ed6;&#x76f8;&#x5173;&#x6cd5;&#x5f8b;&#x4fdd;&#x62a4;&#xff0c;&#x4efb;&#x4f55;&#x975e;&#x6307;&#x5b9a;&#x6536;&#x4ef6;&#x4eba;&#x5bf9;&#x672c;&#x90ae;&#x4ef6;&#x53ca;&#x5176;&#x6240;&#x5305;&#x542b;&#x4fe1;&#x606f;&#x8fdb;&#x884c;&#x4efb;&#x4f55;&#x5f62;&#x5f0f;&#x7684;&#x4f7f;&#x7528;&#x3001;&#x5b58;&#x50a8;&#x3001;&#x590d;&#x5236;&#x3001;&#x62ab;&#x9732;&#x3001;&#x6253;&#x5370;&#x3001;&#x8f6c;&#x53d1;&#x7b49;&#x5747;&#x4e0d;&#x83b7;&#x6388;&#x6743;&#x5e76;&#x4e3a;&#x6cd5;&#x5f8b;&#x6240;&#x7981;&#x6b62;&#x3002;&#x5982;&#x9601;&#x4e0b;&#x8bef;&#x6536;&#xff0c;&#x70e6;&#x8bf7;&#x7acb;&#x5373;&#x56de;&#x590d;&#x3001;&#x7535;&#x8bdd;&#x6216;&#x4f20;&#x771f;&#x901a;&#x77e5;&#x53d1;&#x4ef6;&#x4eba;&#x5e76;&#x4e88;&#x5220;&#x9664;&#xff0c;&#x8c22;&#x8c22;&#x3002;&#xd;&#xa; &#x3c;br&#x3e;&#x3c;br&#x3e;&#xd;&#xa;NOTICE&#x3a; This message, including any attachments, is privileged and may contain confidential information intended only for the person&#x28;s&#x29; named above. Any other distribution, copying or disclosure is strictly prohibited. If you are not the intended recipient or have received this message in error, please notify us immediately by replying to this email and permanently delete the original transmission from us, including any attachments, without making a copy. Please consider the environment before printing this e-mail.&#xd;&#xa;&#x3c;br&#x3e;&#xd;&#xa;---------------------------------------------------------------------&#x3c;br&#x3e;</comment>
+      <include_files>Y</include_files>
+      <zip_files>Y</zip_files>
+      <zip_name>&#x24;&#x7b;MAIL_COMPRESS_NAME&#x7d;</zip_name>
+      <use_auth>Y</use_auth>
+      <use_secure_auth>Y</use_secure_auth>
+      <auth_user>&#x24;&#x7b;bi_mail_user&#x7d;</auth_user>
+      <auth_password>&#x24;&#x7b;bi_mail_pwd&#x7d;</auth_password>
+      <only_comment>Y</only_comment>
+      <use_HTML>Y</use_HTML>
+      <use_Priority>N</use_Priority>
+      <encoding>UTF-8</encoding>
+      <priority>normal</priority>
+      <importance>normal</importance>
+      <sensitivity>normal</sensitivity>
+      <secureconnectiontype>SSL</secureconnectiontype>
+      <replyToAddresses>ghl0451&#x40;163.com</replyToAddresses>
+      <filetypes>        <filetype>GENERAL</filetype>
+      </filetypes>      <embeddedimages>
+      </embeddedimages>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>768</xloc>
+      <yloc>128</yloc>
+      </entry>
+    <entry>
+      <name>set_email_parameters</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>set_email_parameters</transname>
+      <directory>&#x2f;email</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+            <parameter>            <name>MAIL_NAME</name>
+            <stream_name/>
+            <value/>
+            </parameter>      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>352</xloc>
+      <yloc>272</yloc>
+      </entry>
+    <entry>
+      <name>email_ok_log</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>email_ok_log</transname>
+      <directory>&#x2f;email</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+            <parameter>            <name>MAIL_NAME</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;MAIL_NAME&#x7d;</value>
+            </parameter>      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>960</xloc>
+      <yloc>128</yloc>
+      </entry>
+    <entry>
+      <name>email_notok_log</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>rep_name</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname>email_notok_log</transname>
+      <directory>&#x2f;email</directory>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+            <parameter>            <name>MAIL_NAME</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;MAIL_NAME&#x7d;</value>
+            </parameter>      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>960</xloc>
+      <yloc>368</yloc>
+      </entry>
+    <entry>
+      <name>START</name>
+      <description/>
+      <type>SPECIAL</type>
+      <start>Y</start>
+      <dummy>N</dummy>
+      <repeat>N</repeat>
+      <schedulerType>0</schedulerType>
+      <intervalSeconds>0</intervalSeconds>
+      <intervalMinutes>60</intervalMinutes>
+      <hour>12</hour>
+      <minutes>0</minutes>
+      <weekDay>1</weekDay>
+      <DayOfMonth>1</DayOfMonth>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>160</xloc>
+      <yloc>272</yloc>
+      </entry>
+    <entry>
+      <name>validate_MAIL_COMPRESS_NAME</name>
+      <description/>
+      <type>SIMPLE_EVAL</type>
+      <valuetype>variable</valuetype>
+      <fieldname/>
+      <variablename>&#x24;&#x7b;MAIL_COMPRESS_NAME&#x7d;</variablename>
+      <fieldtype>string</fieldtype>
+      <mask/>
+      <comparevalue>no_compress</comparevalue>
+      <minvalue/>
+      <maxvalue/>
+      <successcondition>notcontains</successcondition>
+      <successnumbercondition>equal</successnumbercondition>
+      <successbooleancondition>false</successbooleancondition>
+      <successwhenvarset>N</successwhenvarset>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>624</xloc>
+      <yloc>272</yloc>
+      </entry>
+    <entry>
+      <name>send_email_withoutzip</name>
+      <description/>
+      <type>MAIL</type>
+      <server>&#x24;&#x7b;bi_mail_smtp_addr&#x7d;</server>
+      <port>&#x24;&#x7b;bi_mail_smtp_port&#x7d;</port>
+      <destination>&#x24;&#x7b;MAIL_RECIPIENTS&#x7d;</destination>
+      <destinationCc>&#x24;&#x7b;MAIL_RECIPIENTSCC&#x7d;</destinationCc>
+      <destinationBCc>&#x24;&#x7b;MAIL_RECIPIENTSBCC&#x7d;</destinationBCc>
+      <replyto>&#x24;&#x7b;bi_mail_addr&#x7d;</replyto>
+      <replytoname>&#x24;&#x7b;bi_mail_name&#x7d;</replytoname>
+      <subject>&#x24;&#x7b;MAIL_SUBJECT&#x7d;</subject>
+      <include_date>Y</include_date>
+      <contact_person>&#x90ed;&#x6d77;&#x9f99;</contact_person>
+      <contact_phone>13628465255</contact_phone>
+      <comment>Dear &#x3c;b&#x3e;&#x24;&#x7b;MAIL_TITLE&#x7d;&#x3c;&#x2f;b&#x3e;,&#xd;&#xa;&#x3c;br&#x3e;&#x3c;br&#x3e;&#xd;&#xa;&#x9644;&#x4ef6;&#x662f;&#x4f60;&#x8ba2;&#x9605;&#x7684;&#x6570;&#x636e;&#x6587;&#x4ef6;&#xff0c;&#x8bf7;&#x67e5;&#x6536;&#x3002;&#x3c;br&#x3e;&#xd;&#xa;&#x5982;&#x6709;&#x7591;&#x95ee;&#x8bf7;&#x8054;&#x7cfb; &#x24;&#x7b;CONTACTS_INFO&#x7d; &#x3002;&#x3c;br&#x3e;&#x3c;br&#x3e;&#xd;&#xa;&#xd;&#xa;&#x91cd;&#x5e86;&#x5c0f;&#x96e8;&#x70b9;&#x5c0f;&#x989d;&#x8d37;&#x6b3e;&#x6709;&#x9650;&#x516c;&#x53f8;&#x3c;br&#x3e;&#xd;&#xa;&#x91cd;&#x5e86;&#x5e02;&#x6e1d;&#x5317;&#x533a;&#x7ea2;&#x9526;&#x5927;&#x9053;90&#x53f7;&#x4e2d;&#x6e1d;&#x5e7f;&#x573a;2&#x5e62;26&#x697c;&#x3c;br&#x3e;&#xd;&#xa;&#xd;&#xa;---------------------------------------------------------------------&#x3c;br&#x3e;&#xd;&#xa;&#x91cd;&#x8981;&#x63d0;&#x793a;&#xff1a;&#x672c;&#x90ae;&#x4ef6;&#x53ca;&#x5176;&#x6240;&#x5305;&#x542b;&#x4fe1;&#x606f;&#x7eaf;&#x5c5e;&#x975e;&#x516c;&#x5f00;&#x7684;&#x673a;&#x5bc6;&#x4fe1;&#x606f;&#xff0c;&#x4ec5;&#x9650;&#x4e8e;&#x6536;&#x4ef6;&#x4eba;&#x4f7f;&#x7528;&#xff0c;&#x5e76;&#x53d7;&#x6709;&#x5173;&#x7279;&#x6743;&#x6216;&#x5176;&#x4ed6;&#x76f8;&#x5173;&#x6cd5;&#x5f8b;&#x4fdd;&#x62a4;&#xff0c;&#x4efb;&#x4f55;&#x975e;&#x6307;&#x5b9a;&#x6536;&#x4ef6;&#x4eba;&#x5bf9;&#x672c;&#x90ae;&#x4ef6;&#x53ca;&#x5176;&#x6240;&#x5305;&#x542b;&#x4fe1;&#x606f;&#x8fdb;&#x884c;&#x4efb;&#x4f55;&#x5f62;&#x5f0f;&#x7684;&#x4f7f;&#x7528;&#x3001;&#x5b58;&#x50a8;&#x3001;&#x590d;&#x5236;&#x3001;&#x62ab;&#x9732;&#x3001;&#x6253;&#x5370;&#x3001;&#x8f6c;&#x53d1;&#x7b49;&#x5747;&#x4e0d;&#x83b7;&#x6388;&#x6743;&#x5e76;&#x4e3a;&#x6cd5;&#x5f8b;&#x6240;&#x7981;&#x6b62;&#x3002;&#x5982;&#x9601;&#x4e0b;&#x8bef;&#x6536;&#xff0c;&#x70e6;&#x8bf7;&#x7acb;&#x5373;&#x56de;&#x590d;&#x3001;&#x7535;&#x8bdd;&#x6216;&#x4f20;&#x771f;&#x901a;&#x77e5;&#x53d1;&#x4ef6;&#x4eba;&#x5e76;&#x4e88;&#x5220;&#x9664;&#xff0c;&#x8c22;&#x8c22;&#x3002;&#xd;&#xa; &#x3c;br&#x3e;&#x3c;br&#x3e;&#xd;&#xa;NOTICE&#x3a; This message, including any attachments, is privileged and may contain confidential information intended only for the person&#x28;s&#x29; named above. Any other distribution, copying or disclosure is strictly prohibited. If you are not the intended recipient or have received this message in error, please notify us immediately by replying to this email and permanently delete the original transmission from us, including any attachments, without making a copy. Please consider the environment before printing this e-mail.&#xd;&#xa;&#x3c;br&#x3e;&#xd;&#xa;---------------------------------------------------------------------&#x3c;br&#x3e;</comment>
+      <include_files>Y</include_files>
+      <zip_files>N</zip_files>
+      <zip_name>&#x24;&#x7b;MAIL_COMPRESS_NAME&#x7d;</zip_name>
+      <use_auth>Y</use_auth>
+      <use_secure_auth>Y</use_secure_auth>
+      <auth_user>&#x24;&#x7b;bi_mail_user&#x7d;</auth_user>
+      <auth_password>&#x24;&#x7b;bi_mail_pwd&#x7d;</auth_password>
+      <only_comment>Y</only_comment>
+      <use_HTML>Y</use_HTML>
+      <use_Priority>N</use_Priority>
+      <encoding>UTF-8</encoding>
+      <priority>normal</priority>
+      <importance>normal</importance>
+      <sensitivity>normal</sensitivity>
+      <secureconnectiontype>SSL</secureconnectiontype>
+      <replyToAddresses>ghl0451&#x40;163.com</replyToAddresses>
+      <filetypes>        <filetype>GENERAL</filetype>
+      </filetypes>      <embeddedimages>
+      </embeddedimages>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>768</xloc>
+      <yloc>368</yloc>
+      </entry>
+  </entries>
+  <hops>
+    <hop>
+      <from>send_email_withzip</from>
+      <to>email_ok_log</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>send_email_withzip</from>
+      <to>email_notok_log</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>set_email_parameters</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>set_email_parameters</from>
+      <to>validate_MAIL_COMPRESS_NAME</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>validate_MAIL_COMPRESS_NAME</from>
+      <to>send_email_withzip</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>validate_MAIL_COMPRESS_NAME</from>
+      <to>send_email_withoutzip</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>send_email_withoutzip</from>
+      <to>email_ok_log</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>send_email_withoutzip</from>
+      <to>email_notok_log</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+  </hops>
+  <notepads>
+    <notepad>
+      <note>set_email_parameters &#x3a; get email info from etl_mail_meta&#xd;&#xa;validate_MAIL_COMPRESS_NAME &#x3a; if MAIL_COMPRESS_NAME &#x3d; &#x27;&#x27; then send email without zip else send email with zip.&#xd;&#xa;</note>
+      <xloc>144</xloc>
+      <yloc>16</yloc>
+      <width>869</width>
+      <heigth>70</heigth>
+      <fontname>&#x5fae;&#x8f6f;&#x96c5;&#x9ed1;</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
+  </notepads>
+
+</job>
